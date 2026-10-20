@@ -1,0 +1,33 @@
+name: ShopSphere - Foundation CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repository-checks:
+    name: Repository smoke checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Verify expected folders
+        shell: bash
+        run: |
+          set -euo pipefail
+          for dir in backend frontend database docker docs; do
+            test -d "$dir" || { echo "Missing directory: $dir"; exit 1; }
+          done
+          test -f README.md
+          test -f .gitignore
+          echo "Repository structure is valid"
+      - name: Explain upcoming jobs
+        run: |
+          echo "Next: Java tests, Angular build, Docker verification"
+          echo "AWS deploy will be enabled only after ECR/EC2 setup"
