@@ -1,0 +1,19 @@
+# Java
+**/target/
+*.class
+# Angular / Node
+**/node_modules/
+**/dist/
+**/.angular/
+# IDE
+.idea/
+.settings/
+.vscode/
+# Local secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# Logs
+*.log
